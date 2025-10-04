@@ -22,9 +22,9 @@ Conference_Paper
 Congress
 Consensus Development Conference
 Consensus Development Conference, NIH
-Contrator or Grantee Report
-Contractor Report
-Contribution to Larger Work
+CONTRACTOR_OR_GRANTEE_REPORT
+Contractor_Report
+CONTRIBUTION_TO_LARGER_WORK
 Controlled Clinical Trial
 Corrected and Republished Article
 Dataset
@@ -85,8 +85,16 @@ Video-Audio Media
 Webcast
 White Paper
 
->BIOLOGICAL CLASSIFICATIONS
->>Animal
+BIOLOGICAL CLASSIFICATIONS
+Animal
+Bacteria
+Fungi
+Plant
+Protista
+Virus
+
+CELL & ORGANELLE TYPES
+Animal
 Adipocytes
 Astrocytes
 Basophils
