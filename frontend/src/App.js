@@ -102,34 +102,36 @@ const topicData = [
 
 // Main App Component -------------------------------------------------------------------------------------
 function App() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedOrganism, setSelectedOrganism] = useState('All');
-  const [selectedYear, setSelectedYear] = useState('All');
-  const [selectedTopic, setSelectedTopic] = useState('All');
-  const [showChat, setShowChat] = useState(false);
-  const [chatMessages, setChatMessages] = useState([]);
-  const [chatInput, setChatInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedPaper, setSelectedPaper] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedOrganism, setSelectedOrganism] = useState('All');
+    const [selectedYear, setSelectedYear] = useState('All');
+    const [selectedTopic, setSelectedTopic] = useState('All');
+    const [showChat, setShowChat] = useState(false);
+    const [chatMessages, setChatMessages] = useState([]);
+    const [chatInput, setChatInput] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [selectedPaper, setSelectedPaper] = useState(null);
 
-  // Filter publications
-  const filteredPublications = useMemo(() => {
+    // Filter publications -------------------------------------------------------------------
+    const filteredPublications = useMemo(() => {
     return mockPublications.filter(pub => {
-      const matchesSearch = searchQuery === '' ||
+        const matchesSearch = searchQuery === '' ||
         pub.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         pub.abstract.toLowerCase().includes(searchQuery.toLowerCase()) ||
         pub.keywords.some(k => k.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      const matchesOrganism = selectedOrganism === 'All' || pub.organism === selectedOrganism;
-      const matchesYear = selectedYear === 'All' || pub.year.toString() === selectedYear;
-      const matchesTopic = selectedTopic === 'All' || pub.topic === selectedTopic;
+        const matchesOrganism = selectedOrganism === 'All' || pub.organism === selectedOrganism;
+        const matchesYear = selectedYear === 'All' || pub.year.toString() === selectedYear;
+        const matchesTopic = selectedTopic === 'All' || pub.topic === selectedTopic;
 
-      return matchesSearch && matchesOrganism && matchesYear && matchesTopic;
+        return matchesSearch && matchesOrganism && matchesYear && matchesTopic;
     });
-  }, [searchQuery, selectedOrganism, selectedYear, selectedTopic]);
+    }, [searchQuery, selectedOrganism, selectedYear, selectedTopic]);
+    // ---------------------------------------------------------------------------------------
 
-  // AI Chat function using Claude API
-  const sendChatMessage = async () => {
+
+    // AI Chat function using Claude API -----------------------------------------------------
+    const sendChatMessage = async () => {
     if (!chatInput.trim()) return;
 
     const userMessage = { role: 'user', content: chatInput };
@@ -138,337 +140,300 @@ function App() {
     setIsLoading(true);
 
     try {
-      // Build context from publications
-      const publicationsContext = mockPublications.map(pub =>
+        // Build context from publications
+        const publicationsContext = mockPublications.map(pub =>
         `Title: ${pub.title}\nAuthors: ${pub.authors}\nYear: ${pub.year}\nAbstract: ${pub.abstract}\n`
-      ).join('\n---\n');
+        ).join('\n---\n');
 
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        const response = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          messages: [
+            model: "claude-sonnet-4-20250514",
+            max_tokens: 1000,
+            messages: [
             {
-              role: "user",
-              content: `You are an AI assistant helping scientists explore NASA space biology research. Based on the following publications, answer the user's question. Be specific and cite relevant studies when possible.
-
-Publications:
-${publicationsContext}
-
-User Question: ${chatInput}`
+                role: "user",
+                content: `You are an AI assistant helping scientists explore NASA space biology research. 
+                        Based on the following publications, answer the user's question. 
+                        Be specific and cite relevant studies when possible.
+                        Publications:
+                        ${publicationsContext}
+                        User Question: ${chatInput}`
             }
-          ]
+            ]
         })
-      });
+        });
 
-      const data = await response.json();
-      const assistantMessage = {
+        const data = await response.json();
+        const assistantMessage = {
         role: 'assistant',
         content: data.content[0].text
-      };
+        };
 
-      setChatMessages(prev => [...prev, assistantMessage]);
+        setChatMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Chat error:', error);
-      setChatMessages(prev => [...prev, {
+        console.error('Chat error:', error);
+        setChatMessages(prev => [...prev, {
         role: 'assistant',
         content: 'Sorry, I encountered an error. Please try again.'
-      }]);
+        }]);
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
-  };
+    };
+    // ---------------------------------------------------------------------------------------
 
-  const organisms = ['All', 'Plants', 'Humans', 'Microbes', 'Other'];
-  const years = ['All', '2024', '2023', '2022', '2021', '2020', '2019'];
-  const topics = ['All', 'Plant Biology', 'Human Physiology', 'Microbiology', 'Model Organisms'];
+    // Filter options
+    const organisms = ['All', 'Plants', 'Humans', 'Microbes', 'Other'];
+    const years = ['All', '2024', '2023', '2022', '2021', '2020', '2019'];
+    const topics = ['All', 'Plant Biology', 'Human Physiology', 'Microbiology', 'Model Organisms'];
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white">
-      {/* Header */}
-      <header className="bg-black/30 backdrop-blur-sm border-b border-blue-500/20">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Beaker className="w-8 h-8 text-blue-400" />
-              <div>
-                <h1 className="text-2xl font-bold">NASA Space Biology Knowledge Engine</h1>
-                <p className="text-sm text-blue-300">Exploring 608 Publications</p>
-              </div>
-            </div>
-            <button
-              onClick={() => setShowChat(!showChat)}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
-            >
-              <MessageSquare className="w-5 h-5" />
-              AI Assistant
-            </button>
-          </div>
-        </div>
-      </header>
+    // Main render
+	return (
+	  <div className="app-container">
+		{/* Header */}
+		<header className="app-header">
+		  <div className="header-inner">
+			<div className="header-left">
+			  <Beaker className="logo-icon" />
+			  <div>
+				<h1 className="header-title">NASA Space Biology Knowledge Engine</h1>
+				<p className="header-subtitle">Exploring 608 Publications</p>
+			  </div>
+			</div>
+			<button onClick={() => setShowChat(!showChat)} className="btn">
+			  <MessageSquare className="icon" />
+			  AI Assistant
+			</button>
+		  </div>
+		</header>
 
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-            <div className="text-3xl font-bold text-blue-400">608</div>
-            <div className="text-sm text-gray-300">Total Publications</div>
-          </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-            <div className="text-3xl font-bold text-green-400">182</div>
-            <div className="text-sm text-gray-300">Plant Studies</div>
-          </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-            <div className="text-3xl font-bold text-purple-400">156</div>
-            <div className="text-sm text-gray-300">Human Studies</div>
-          </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-            <div className="text-3xl font-bold text-orange-400">2019-2024</div>
-            <div className="text-sm text-gray-300">Year Range</div>
-          </div>
-        </div>
+		<div className="main-content">
+		  {/* Stats Overview */}
+		  <div className="stats-grid">
+			<div className="stat-card">
+			  <div className="stat-value">608</div>
+			  <div className="stat-label">Total Publications</div>
+			</div>
+			<div className="stat-card">
+			  <div className="stat-value text-green">182</div>
+			  <div className="stat-label">Plant Studies</div>
+			</div>
+			<div className="stat-card">
+			  <div className="stat-value text-purple">156</div>
+			  <div className="stat-label">Human Studies</div>
+			</div>
+			<div className="stat-card">
+			  <div className="stat-value text-orange">2019–2024</div>
+			  <div className="stat-label">Year Range</div>
+			</div>
+		  </div>
 
-        {/* Visualizations */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <TrendingUp className="w-5 h-5" />
-              Publications Over Time
-            </h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={yearlyData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff20" />
-                <XAxis dataKey="year" stroke="#fff" />
-                <YAxis stroke="#fff" />
-                <Tooltip
-                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #3b82f6' }}
-                />
-                <Line type="monotone" dataKey="count" stroke="#3b82f6" strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+		  {/* Visualizations */}
+		  <div className="viz-grid">
+			<div className="viz-card">
+			  <h3 className="viz-title">
+				<TrendingUp className="icon" />
+				Publications Over Time
+			  </h3>
+			  <ResponsiveContainer width="100%" height={200}>
+				<LineChart data={yearlyData}>
+				  <CartesianGrid strokeDasharray="3 3" className="chart-grid" />
+				  <XAxis dataKey="year" className="chart-axis" />
+				  <YAxis className="chart-axis" />
+				  <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #3b82f6' }} />
+				  <Line type="monotone" dataKey="count" stroke="#3b82f6" strokeWidth={2} />
+				</LineChart>
+			  </ResponsiveContainer>
+			</div>
 
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-            <h3 className="text-lg font-semibold mb-4">Research Topics</h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <PieChart>
-                <Pie
-                  data={topicData}
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={80}
-                  dataKey="value"
-                  label={({ name, value }) => `${name}: ${value}`}
-                >
-                  {topicData.map((entry, index) => (
-                    <Cell key={index} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #3b82f6' }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+			<div className="viz-card">
+			  <h3 className="viz-title">Research Topics</h3>
+			  <ResponsiveContainer width="100%" height={200}>
+				<PieChart>
+				  <Pie
+					data={topicData}
+					cx="50%"
+					cy="50%"
+					outerRadius={80}
+					dataKey="value"
+					label={({ name, value }) => `${name}: ${value}`}
+				  >
+					{topicData.map((entry, index) => (
+					  <Cell key={index} fill={entry.color} />
+					))}
+				  </Pie>
+				  <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #3b82f6' }} />
+				</PieChart>
+			  </ResponsiveContainer>
+			</div>
+		  </div>
 
-        {/* Search and Filters */}
-        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 mb-6">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search publications by title, abstract, or keywords..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+		  {/* Search + Filters */}
+		  <div className="filter-panel">
+			<div className="filter-row">
+			  <div className="search-box">
+				<Search className="search-icon" />
+				<input
+				  type="text"
+				  placeholder="Search publications..."
+				  value={searchQuery}
+				  onChange={(e) => setSearchQuery(e.target.value)}
+				  className="search-input"
+				/>
+			  </div>
 
-            <div className="flex gap-2 flex-wrap md:flex-nowrap">
-              <select
-                value={selectedOrganism}
-                onChange={(e) => setSelectedOrganism(e.target.value)}
-                className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {organisms.map(org => (
-                  <option key={org} value={org} className="bg-slate-800">{org}</option>
-                ))}
-              </select>
+			  <div className="filter-selects">
+				<select value={selectedOrganism} onChange={(e) => setSelectedOrganism(e.target.value)} className="filter-select">
+				  {organisms.map(org => (
+					<option key={org} value={org}>{org}</option>
+				  ))}
+				</select>
 
-              <select
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(e.target.value)}
-                className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {years.map(year => (
-                  <option key={year} value={year} className="bg-slate-800">{year}</option>
-                ))}
-              </select>
+				<select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} className="filter-select">
+				  {years.map(year => (
+					<option key={year} value={year}>{year}</option>
+				  ))}
+				</select>
 
-              <select
-                value={selectedTopic}
-                onChange={(e) => setSelectedTopic(e.target.value)}
-                className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {topics.map(topic => (
-                  <option key={topic} value={topic} className="bg-slate-800">{topic}</option>
-                ))}
-              </select>
-            </div>
-          </div>
+				<select value={selectedTopic} onChange={(e) => setSelectedTopic(e.target.value)} className="filter-select">
+				  {topics.map(topic => (
+					<option key={topic} value={topic}>{topic}</option>
+				  ))}
+				</select>
+			  </div>
+			</div>
 
-          <div className="mt-2 text-sm text-gray-300">
-            Showing {filteredPublications.length} of {mockPublications.length} publications
-          </div>
-        </div>
+			<div className="filter-count">
+			  Showing {filteredPublications.length} of {mockPublications.length} publications
+			</div>
+		  </div>
 
-        {/* Publications List */}
-        <div className="space-y-4">
-          {filteredPublications.map(pub => (
-            <div
-              key={pub.id}
-              className="bg-white/10 backdrop-blur-sm rounded-lg p-5 border border-white/20 hover:border-blue-500/50 transition-all cursor-pointer"
-              onClick={() => setSelectedPaper(pub)}
-            >
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="text-xl font-semibold text-blue-300 flex-1">{pub.title}</h3>
-                <span className="text-sm bg-blue-600/30 px-3 py-1 rounded-full ml-4">{pub.year}</span>
-              </div>
+		  {/* Publications List */}
+		  <div className="pub-list">
+			{filteredPublications.map(pub => (
+			  <div key={pub.id} className="publication-card" onClick={() => setSelectedPaper(pub)}>
+				<div className="pub-header">
+				  <h3 className="publication-title">{pub.title}</h3>
+				  <span className="pub-year">{pub.year}</span>
+				</div>
 
-              <p className="text-sm text-gray-300 mb-3">{pub.authors}</p>
+				<p className="publication-meta">{pub.authors}</p>
+				<p className="publication-abstract">{pub.abstract}</p>
 
-              <p className="text-gray-200 mb-3 line-clamp-2">{pub.abstract}</p>
+				<div className="pub-tags">
+				  <span className="tag tag-green">{pub.organism}</span>
+				  <span className="tag tag-purple">{pub.topic}</span>
+				  {pub.conditions.map(cond => (
+					<span key={cond} className="tag tag-orange">{cond}</span>
+				  ))}
+				</div>
 
-              <div className="flex flex-wrap gap-2 mb-2">
-                <span className="text-xs bg-green-600/30 px-2 py-1 rounded">{pub.organism}</span>
-                <span className="text-xs bg-purple-600/30 px-2 py-1 rounded">{pub.topic}</span>
-                {pub.conditions.map(cond => (
-                  <span key={cond} className="text-xs bg-orange-600/30 px-2 py-1 rounded">{cond}</span>
-                ))}
-              </div>
+				<div className="pub-extra">
+				  {pub.citations} citations • Keywords: {pub.keywords.join(', ')}
+				</div>
+			  </div>
+			))}
+		  </div>
+		</div>
 
-              <div className="text-xs text-gray-400">
-                {pub.citations} citations • Keywords: {pub.keywords.join(', ')}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+		{/* AI Chat Panel */}
+		{showChat && (
+		  <div className="chat-panel">
+			<div className="chat-header">
+			  <h3>
+				<MessageSquare className="icon" /> AI Research Assistant
+			  </h3>
+			  <button onClick={() => setShowChat(false)} className="close-btn">
+				<X className="icon" />
+			  </button>
+			</div>
 
-      {/* AI Chat Panel */}
-      {showChat && (
-        <div className="fixed right-4 bottom-4 w-96 h-[500px] bg-slate-900 border border-blue-500/30 rounded-lg shadow-2xl flex flex-col">
-          <div className="bg-blue-600 p-4 rounded-t-lg flex justify-between items-center">
-            <h3 className="font-semibold flex items-center gap-2">
-              <MessageSquare className="w-5 h-5" />
-              AI Research Assistant
-            </h3>
-            <button onClick={() => setShowChat(false)}>
-              <X className="w-5 h-5" />
-            </button>
-          </div>
+			<div className="chat-messages">
+			  {chatMessages.length === 0 && (
+				<div className="chat-empty">
+				  <p className="mb-2">Ask me anything about the publications!</p>
+				  <p className="text-sm">Try: "What do we know about bone density loss?"</p>
+				</div>
+			  )}
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            {chatMessages.length === 0 && (
-              <div className="text-center text-gray-400 mt-8">
-                <p className="mb-2">Ask me anything about the publications!</p>
-                <p className="text-sm">Try: "What do we know about bone density loss?"</p>
-              </div>
-            )}
+			  {chatMessages.map((msg, idx) => (
+				<div key={idx} className={msg.role === 'user' ? "chat-message-user" : "chat-message-assistant"}>
+				  <div className="text-sm">{msg.content}</div>
+				</div>
+			  ))}
 
-            {chatMessages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`p-3 rounded-lg ${
-                  msg.role === 'user'
-                    ? 'bg-blue-600 ml-8'
-                    : 'bg-white/10 mr-8'
-                }`}
-              >
-                <div className="text-sm">{msg.content}</div>
-              </div>
-            ))}
+			  {isLoading && (
+				<div className="chat-message-assistant">
+				  <div className="text-sm">Thinking...</div>
+				</div>
+			  )}
+			</div>
 
-            {isLoading && (
-              <div className="bg-white/10 p-3 rounded-lg mr-8">
-                <div className="text-sm text-gray-400">Thinking...</div>
-              </div>
-            )}
-          </div>
+			<div className="chat-input-area">
+			  <input
+				type="text"
+				value={chatInput}
+				onChange={(e) => setChatInput(e.target.value)}
+				onKeyPress={(e) => e.key === 'Enter' && sendChatMessage()}
+				placeholder="Ask about the research..."
+				className="chat-input"
+				disabled={isLoading}
+			  />
+			  <button onClick={sendChatMessage} disabled={isLoading} className="btn">
+				Send
+			  </button>
+			</div>
+		  </div>
+		)}
 
-          <div className="p-4 border-t border-white/20">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={chatInput}
-                onChange={(e) => setChatInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && sendChatMessage()}
-                placeholder="Ask about the research..."
-                className="flex-1 px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                disabled={isLoading}
-              />
-              <button
-                onClick={sendChatMessage}
-                disabled={isLoading}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Send
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+		{/* Paper Detail Modal */}
+		{selectedPaper && (
+		  <div className="modal-overlay" onClick={() => setSelectedPaper(null)}>
+			<div className="modal" onClick={(e) => e.stopPropagation()}>
+			  <div className="modal-header">
+				<h2 className="modal-title">{selectedPaper.title}</h2>
+				<button onClick={() => setSelectedPaper(null)} className="close-btn">
+				  <X className="icon" />
+				</button>
+			  </div>
 
-      {/* Paper Detail Modal */}
-      {selectedPaper && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50" onClick={() => setSelectedPaper(null)}>
-          <div className="bg-slate-900 border border-blue-500/30 rounded-lg max-w-3xl w-full max-h-[80vh] overflow-y-auto p-6" onClick={(e) => e.stopPropagation()}>
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-2xl font-bold text-blue-300">{selectedPaper.title}</h2>
-              <button onClick={() => setSelectedPaper(null)} className="text-gray-400 hover:text-white">
-                <X className="w-6 h-6" />
-              </button>
-            </div>
+			  <p className="publication-meta">{selectedPaper.authors} ({selectedPaper.year})</p>
 
-            <p className="text-gray-300 mb-4">{selectedPaper.authors} ({selectedPaper.year})</p>
+			  <div className="pub-tags">
+				<span className="tag tag-green">{selectedPaper.organism}</span>
+				<span className="tag tag-purple">{selectedPaper.topic}</span>
+				{selectedPaper.conditions.map(cond => (
+				  <span key={cond} className="tag tag-orange">{cond}</span>
+				))}
+			  </div>
 
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="text-sm bg-green-600/30 px-3 py-1 rounded">{selectedPaper.organism}</span>
-              <span className="text-sm bg-purple-600/30 px-3 py-1 rounded">{selectedPaper.topic}</span>
-              {selectedPaper.conditions.map(cond => (
-                <span key={cond} className="text-sm bg-orange-600/30 px-3 py-1 rounded">{cond}</span>
-              ))}
-            </div>
+			  <h3 className="section-title">Abstract</h3>
+			  <p className="publication-abstract">{selectedPaper.abstract}</p>
 
-            <h3 className="text-lg font-semibold mb-2">Abstract</h3>
-            <p className="text-gray-200 mb-4">{selectedPaper.abstract}</p>
+			  <h3 className="section-title">Details</h3>
+			  <p className="publication-meta">Citations: {selectedPaper.citations}</p>
+			  <p className="publication-meta">Keywords: {selectedPaper.keywords.join(', ')}</p>
 
-            <h3 className="text-lg font-semibold mb-2">Details</h3>
-            <p className="text-gray-300 mb-2">Citations: {selectedPaper.citations}</p>
-            <p className="text-gray-300">Keywords: {selectedPaper.keywords.join(', ')}</p>
-
-            <button
-              onClick={() => {
-                setSelectedPaper(null);
-                setShowChat(true);
-                setChatInput(`Tell me more about "${selectedPaper.title}"`);
-              }}
-              className="mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center gap-2"
-            >
-              <MessageSquare className="w-4 h-4" />
-              Ask AI About This Paper
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+			  <button
+				onClick={() => {
+				  setSelectedPaper(null);
+				  setShowChat(true);
+				  setChatInput(`Tell me more about "${selectedPaper.title}"`);
+				}}
+				className="btn"
+			  >
+				<MessageSquare className="icon" />
+				Ask AI About This Paper
+			  </button>
+			</div>
+		  </div>
+		)}
+	  </div>
+	);
 }
 // ========================================================================================================
 

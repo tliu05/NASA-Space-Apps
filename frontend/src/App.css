@@ -43,6 +43,9 @@ body {
   font-family: system-ui, sans-serif;
   background: linear-gradient(to bottom right, #0f172a, #1e3a8a, #0f172a);
   color: #fff;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 header {
