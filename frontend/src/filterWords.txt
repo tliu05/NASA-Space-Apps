@@ -1,0 +1,808 @@
+PUBLICATION TYPE
+Accepted_Manuscript
+Adaptive Clinical Trial
+Addressa
+Autobiography
+Bibliography
+Biography
+Case Reports
+Classical Article
+Clinical Conference
+Clinical Study
+Clinical Trial
+Clinical Trial Protocol
+Clinical Trial, Phase I
+Clinical Trial, Phase II
+Clinical Trial, Phase III
+Clinical Trial, Phase IV
+Clinical Trial, Veterinary
+Comment
+Comparative Study
+Conference_Paper
+Congress
+Consensus Development Conference
+Consensus Development Conference, NIH
+CONTRACTOR_OR_GRANTEE_REPORT
+Contractor_Report
+CONTRIBUTION_TO_LARGER_WORK
+Controlled Clinical Trial
+Corrected and Republished Article
+Dataset
+Dictionary
+Directory
+Dissertation
+Duplicate Publication
+Editorial
+English Abstract
+Equivalence Trial
+Evaluation Study
+Expression of Concern
+Guideline
+Historical Article
+Interactive Tutorial
+Interview
+Introductory Journal Article
+Journal Article
+Lecture
+Legal Case
+Letter
+Meta-Analysis
+Multicenter Study
+News
+Newspaper Article
+Observational Study
+OTHER
+Overall
+Peer-Reviewed
+Personal Narrative
+Portrait
+Practice Guideline
+Pragmatic Clinical Trial
+Preprint
+Presentation
+Published Erratum
+Randomized Controlled Trial
+Randomized Controlled Trial, Veterinary
+Reprint
+Research Support, American Recovery and Reinvestment Act
+Research Support, N.I.H., Extramural
+Research Support, N.I.H., Intramural
+Research Support, Non-U.S. Gov't
+Research Support, U.S. Gov't, Non-P.H.S.
+Research Support, U.S. Gov't, P.H.S.
+Retracted Publication
+Retraction of Publication
+Review
+Systematic Review
+Technical Publication
+Technical Report
+Technical Publication
+Technical Trasnlation
+Thesis Dissertation
+Twin Study
+Validation Study
+Video-Audio Media
+Webcast
+White Paper
+
+BIOLOGICAL CLASSIFICATIONS
+Animal
+Bacteria
+Fungi
+Plant
+Protista
+Virus
+
+CELL & ORGANELLE TYPES
+Animal
+Adipocytes
+Astrocytes
+Basophils
+Cardiac Muscle
+Centrioles
+Centrosomes
+Chondrocytes
+Cilia
+Ciliated Epithelial
+Columnar
+Cuboidal
+Cytoskeleton
+Endoplasmic Reticulum
+Endothelial
+Enterocytes
+Eosinophils
+Ependymal
+Epithelial
+Erythrocytes
+Fibroblasts
+Flagella
+Germ Cells
+Glial
+Goblet
+Golgi Apparatus
+Hepatocytes
+Keratinocytes
+Langerhans
+Leukocytes
+Lymphocytes
+Lysosomes
+Macrophages
+Melanocytes
+Mesenchymal Stem
+Mesenchymal Stromal
+Mesothelial
+Microglia
+Mitochondria
+Monocytes
+Myoblasts
+Myocytes
+Neural Stem
+Neurons
+Neutrophils
+Nucleus
+Oligodendrocytes/Schwann
+Oocytes
+Osteoblasts
+Osteoclasts
+Osteocytes
+Paneth
+Peripheral Blood Mononuclear/PBMCs
+Peroxisomes
+Plasma Membrane
+Ribosomes
+Skeletal Muscle/Fibers
+Smooth Muscle
+Spermatozoa/Gametes
+Squamous
+Stem / Multipotent
+Stem / Pluripotent
+Stem / Totipotent
+Thrombocytes/Platelets
+Thymocytes
+Vesicles
+Bacteria
+Acid-fast
+Aerotolerant Anaerobes
+Bacillus / pl. Bacilli
+Capsulated
+Capsule
+Cell Membrane
+Cell Wall
+Cell wall-less
+Chemoautotrophs
+Chemoheterotrophs
+Chemotrophs
+Coccus / pl. Cocci
+Endospore-forming
+Facultative Anaerobes
+Filamentous
+Flagella
+Flagellated
+Gram-negative
+Gram-positive
+Inclusion Bodies
+Microaerophiles
+Nucleoid
+Obligate Aerobes
+Obligate Anaerobes
+Phototrophs
+Pili / Fimbriae
+Plasmids
+Pleomorphic
+Spirillum
+Spirochete
+Thylakoid Membranes
+Vibrio
+Fungal
+Appressoria
+Ascospores
+Basidiospores
+Blastospores
+Cell Wall / Chitin
+Chlamydospores
+Coenocytic (Aseptate) Hyphae
+Conidia
+Endoplasmic Reticulum
+Golgi Apparatus
+Haustoria
+Hyphal
+Lipid Bodies
+Mitochondria
+Mycelium
+Nucleus
+Plasma Membrane
+Pseudohyphae
+Ribosomes
+Septal Pores
+Septate Hyphae
+Sporangiospores
+Vacuole
+Yeast
+Zygospores
+Plant
+Amyloplasts
+Atrichoblast
+Casparian Strip
+Cell Wall
+Chloroplasts
+Chromoplasts
+Collenchyma
+Companion Cells
+Cuticle
+Endodermal
+Endoplasmic Reticulum
+Epidermal
+Fibers
+Glyoxysomes
+Guard
+Leucoplasts
+Meristematic
+Mesophyll
+Palisade Parenchyma
+Parenchyma
+Pavement
+Phloem
+Phloem Fibers
+Phloem Parenchyma
+Plasma Membrane
+Plasmodesmata
+Plastids
+Ribosomes
+Root Hair
+Sclereids
+Sclerenchyma
+Sieve Tube Elements
+Stomata
+Tracheids
+Trichomes/Hairs
+Vacuole
+Vessel Elements
+Xylem
+Xylem Fibers
+Xylem Parenchyma
+Protista
+Amoeboid
+Autotrophic
+Chloroplasts
+Cilia/Flagella
+Ciliated
+Contractile Vacuole
+Cyst Form
+Cytostome
+Endoplasmic Reticulum
+Eyespot/Stigma
+Flagellated
+Food Vacuoles
+Free-living
+Golgi Apparatus
+Heterotrophic
+Mitochondria
+Mixotrophic
+Nucleus
+Parasitic
+Pellicle
+Photosynthetic/Algal
+Plasma Membrane
+Ribosomes
+Slime Mold Plasmodium
+Viral
+Complex
+DNA
+Helical
+Icosahedral
+Retro
+RNA
+Segmented
+FLIGHT PLATFORM
+Any value
+Autonomous Spacecraft (e.g., SpaceX Dragon, Sierra Nevada Dream Chaser)
+Balloon Platforms (High Altitude)
+Beyond Earth Orbit (BEO)
+Communication Satellites
+CubeSats / SmallSats / NanoSats
+Geostationary Orbit (GEO)
+GNSS Satellites (e.g., GPS, Galileo)
+High-Altitude Aircraft
+Highly Elliptical Orbit (HEO)
+International Space Station (ISS)
+Interplanetary Probes
+Low Earth Orbit (LEO)
+Lunar Lander Missions
+Lunar Orbiters
+Mars Orbiters
+Mars Science Laboratory (Curiosity, Perseverance)
+Medium Earth Orbit (MEO)
+New Horizons
+Other LEO Platforms (e.g., Chinese Tiangong Station, commercial LEO habitats)
+Parabolic Flight
+Satellite
+Shuttle
+SOFIA — Stratospheric Observatory for Infrared Astronomy
+Sounding Rocket
+Stratospheric Balloons
+Suborbital Flight
+Tethered Aerostats
+Tundra or Molniya Orbits (e.g., weather, comms for polar regions)
+Voyager 1 & 2
+Zero-pressure & Superpressure Balloons
+HARDWARE (SIMULATORS, CHAMBERS, & ALTERATION DEVICES)
+Any value
+1D Clinostat
+20G Centrifuge
+2D Clinostat
+3D Clinostat
+4-Channel Ambient Temperature Recorder
+8-Foot Centrifuge
+Active sample incubator (ISS EXPRESS rack)
+Advanced Astroculture (ADVASC)
+Advanced Biological Research System
+Advanced Plant Habitat
+Advanced Protein Crystallization Facility
+Advanced Space Experiment Processor
+Aircraft Bioaerosol Collector (ABC)
+Ambient Temperature Recorder (ATR-4)
+Analytical Containment Transfer Tool
+Anesthesia Recovery System (ARS)
+Animal Access Unit (AAU)
+Animal Enclosure Module (AEM)
+Animal Enclosure Module Transporter (AEM-T)
+Aquatic Animal Experiment Unit (AAEU)
+Aquatic Habitat
+Aquatic Research Facility (ARF)
+Area Passive Dosimeter (APD)
+Astro Garden from Sierra Space
+Autogenic Feedback Training Experiment (AFTE) System
+Automated Cell Culture Incubators
+Autonomous Biological System
+Avian Development Facility (ADF)
+Beetle Kit
+Bio-Analyzer
+BioCell Cell Culture and Plate Habitats (PHAB)
+BioChip SpaceLab
+BIOCORE (BIOlogical COsmic Ray Experiment) Life Support Hardware
+BioCulture System
+BioFabrication Facility
+BIOKON
+Biolab (on ISS; also has ground analogs)
+Biological Experiment Laboratory
+Biomass Production Chamber
+Biomass Production System (BPS)
+Bion 10 Hardware Suite
+Bion 11 Hardware Suite
+Biopack
+Biopan
+Biorack
+Bioreactor
+Bioreactor Express
+BioSentinel / BioSentinel II Payload
+BioServe
+Biotechnology Specimen Temperature Controller
+Biotelemetry System (BTS)
+Biotube
+Black Box
+Boiling eXperiment Facility
+Bone Densitometer
+BOTEX
+BRIC (Biological Research in Canisters)
+BRIC-100
+BRIC-100VC
+BRIC-60
+BRIC-LED
+BRIC-OPTI
+BRIC-PDFU
+Brookhaven National Laboratory Gamma Radiation Source Facility (BNL-GRSF)
+Capsicum (Pepper Plant) Experiment Hardware
+Cardiovascular Experiment Hardware
+Carrot Tissue Containers: Embryoid Container and Tumor Growth Containers
+Cell Biology Experiment Facility (CBEF)
+Cell Biology Experimentation Facility; Plant Experimentation Unit
+Cell Culture Module (CCM)
+Cell Culturing
+Circadian Periodicity Experiment (CPE) Package
+Circadian Rhythm Experiment Hardware
+Circadian Rhythm/Temperature Experiment Hardware (CR/T)
+Circadian Rhythm/Temperature Hardware (CR/T)
+Clean Bench
+Closed Equilibrated Biological Aquatic System (CEBAS)
+Cold Atom Lab
+Colorimetric Measurement
+Columbus - External Payload Facility
+Combustion Integrated Rack - Fluids and Combustion Facility
+Commercial Generic Bioprocessing Apparatus (CGBA)
+Compact TEPC
+Cosmos Centrifuge
+Cosmos Fruit Fly Container
+Cosmos Fundulus Chambers
+Cosmos Primate-BIOS
+Cosmos Rodent Cages
+Cosmos Rodent-BIOS
+Deep Underground Low Background Laboratory (DULB-4900)
+Device for the Study of Critical Liquids and Crystallization
+Diamagnetic Levitation Apparatus
+Dissecting Microscope
+Drosophila (Fruit Fly) Experiment Package
+Dynamic Environment Measuring System (DEMS)
+E150 Experiment Unique Hardware (EUE)
+ED61/62 Experiment Hardware
+Electrochemical Monitoring Chambers
+Electromagnetic Levitator
+Electrostatic Levitation Furnace
+ELM Imager
+Environmental Sensors & Loggers
+Europa Life Microscope
+European Drawer Rack
+European Drawer Rack-2
+European Modular Cultivation System (EMCS)
+European Technology Exposure Facility
+Exocube
+Expedite the Processing of Experiments to the Space Station Logistics Carrier
+EXPOSE beyond LEO
+Extant Life Volumetric Imaging System
+Faraday Research Facility
+Fast Rotating Clinostat
+Faxitron CP160
+FIGARO
+Fixative Kits
+Fluid Physics Experiment Facility
+Fluid Science Laboratory
+Fluids Integrated Rack - Fluids and Combustion Facility
+Fluorescence Microscopes (Automated)
+Frog Environmental Unit (FEU)
+Frog Otolith Experiment Package (FOEP)
+Fruit Fly Lab Experiment Hardware
+Fundamental Biology Kit Hardware
+Fungal Immunity (FIT) Fly Kit
+Gammacell 1000 Elite
+Gammacell 40
+Gas Exchange Measurement System (GEMS)
+Gaseous Nitrogen (GN2) Freezer
+Gene Expression Measurement Module
+Gene Vault
+General Purpose Transfer Unit (GPTU)
+General Purpose Work Station (GPWS)
+GeneSat Payload
+Granada Crystallization Facility
+GraviSat Payload
+Gravitational Plant Physiology Facility (GPPF)
+Group Activation Pack (GAP)
+Group Activation Pack-Fluid Processing Apparatus ; Group Activation Pack
+Growth Chambers with LED Spectrum Control
+Growth Hormone Concentration and Distribution (GHCD) in Plants Experiment Hardware
+Habrobracon (Wasp) Experiment Package
+HARV (High Aspect Ratio Vessel)
+Heavy Ion Medical Accelerator (HIMAC)
+Heavy Ion Synchrotron SIS-18
+Hermes Facility
+Hyperspectral Imaging Cameras
+ISS SERVIR Environmental Research and Visualization System
+Japanese Experiment Module - Exposed Facility
+JAXA Mouse Habitat Unit
+Kennedy Space Center Fixation Tube
+KEyence Research MIcroscope Testbed
+KOBAIRO Rack
+KUBIK (ESA’s Incubator Unit)
+Large Gradient High Magnetic Field System
+Life Sciences Glovebox (LSG) Simulators
+Light Microscopy Module
+Lysogenic Bacteria Experiment Package
+Materials ISS Experiment Flight Facility
+Materials Science Laboratory
+Materials Science Research Rack-1
+Mice Drawer System Facility
+Microbial Tracking
+Microfluidic Biochips / Lab-on-a-Chip Platforms
+Microfluidic Icy-world Chemical Analyzer
+Microgravity Experiment Research Locker Incubator
+Microgravity Science Glovebox (MSG)
+Microgravity Vibration Isolation Subsystem
+Microgravity-based Automated Manufacturing and Bioprocessing Outpost
+Microinjection Syringe
+MicroPREP
+Microscopy SpaceLab
+Middeck Ambient Stowage Insert (MASI) and Plant Carry On Container (PCOC)
+MinION
+Mobile SpaceLab
+Mochii
+Multi Purpose Small Payload Rack
+Multi Purpose Small Payload Rack-2
+Multi-Bioscience Core Facility
+Multi-use Variable-g Platform (MVP)
+Multiple Orbital Bioreactor with Instrumentation and Automated Sampling
+MVP-Cell (Space Races)
+NanoRacks
+NanoRacks Astrium Centrifuge
+NanoRacks External Platform
+NanoRacks Frame-3
+NanoRacks Microscope-3
+NanoRacks Microscopes
+NanoRacks MixStix
+Nanoracks Nanode
+NanoRacks Plate Reader
+NanoRacks Plate Reader-2
+NanoRacks Platforms
+next-gen PharmaSat/ EcAMSat/SESLO/PowerCell
+O/OREOS SEVO Payload
+Optical Density/
+OREOcube
+Organ on a Chip
+Particle Accelerator - NASA Space Radiation Laboratory (NSRL)
+Passive Thermal Conditioning Unit (PTCU)
+Pelomyxa (Amoeba) Experiment Package
+Petri Dish Fixation Unit
+PFMI Facility
+PHCF Altered Kit Container (AKC)
+Phototropism Chambers
+PIN Diode / PIN Rad
+Plant Experiment Unit / Cell Biology Experiment Facility (PEU/CBEF)
+Plant Growth Unit (PGU)
+Plant Habitat Units (for ISS analogs)
+Plastic Scintillators
+Protein Crystal Growth - Single Locker Thermal Enclosure System
+Protein Crystallization Research Facility
+RadFET
+Radiation Beamlines (e.g., NSRL – NASA Space Radiation Lab)
+Radiation Source and Holder
+Radiological Research Accelerator Facility (RARAF) 5.5 MV Singleton
+Random Positioning Machine
+Razor EX (qPCR)
+Research Integration Office (RIO) BioMole Facility; Research Integration Office BioMole Facility
+Ring Sheared Drop
+Rodent Habitat (AEM-X)
+Rodent Research Facility
+Rotary Cell Culture System
+Rotating Wall Vessel
+Sea Urchin Egg Package
+Seedling Growth Expt. Container (from EMCS)
+Short/Long Arm Centrifuges
+Single-Board LET Radiation Spectrometer
+Single-Cassette Bioculture System
+Small Mass Measurement Instrument (SMMI)
+Solar Simulation Lamps
+Solid Fuel Ignition and Extinction
+Solidification Using a Baffle in Sealed Ampoules (SUBSA)
+Solution Crystallization Observation Facility
+Space Automated Bioproduct Lab (SABL)
+Space Automated Lab Incubator
+Space Technology and Advanced Research Systems, Inc.-1 Experiment Facility
+SporeSat Payload
+Standard Interface Glove Box (SIGB)
+Sterile Growth Chambers
+Syringe Pump for Organs-on-Chips (SPOC); Syringe Pump for Organs-on-Chips
+TangoLab-1
+TangoLab-2
+TELe-Luminescence Analysis System
+Temperature Recording System
+TID (Teledyne)
+Time-lapse Microscopy Systems
+Tissue Chip /
+Tissue Culture Flask Spinners
+Tradescantia (Flowering Plant) Experiment Package
+Triticum (Wheat) Experiment Package
+Variable Pressure Growth Chamber
+Vegetable Production System
+Vegetable Production System (Veggie)
+Wet Lab Kit
+Wet Lab RNA SmartCycler
+Wetlab-2
+XROOTS
+yuri - ScienceBox
+yuri - ScienceShell
+yuri - ScienceTaxi
+
+SPACE VARIABLES, ENVIRONMENTS, & CONDITIONS
+Any value
+1G Control
+Alpha Particles
+Artificial Gravity
+Artificial Gravity Bed Rest
+Beta Particles
+Cosmic Radiation
+Cyclic (Circadian rhythm disruption, light-dark cycles)
+Electromagnetic Radiation
+Enclosed Environment
+EVA (Extravehicular Activity)
+G-Force
+Galactic Cosmic Radiation (GCR)
+Gamma Radiation
+Heavy ions
+High Altitude
+High-CO2
+High-LET Radiation
+Hydrostatic Pressure
+Hypergravity
+Hypogravity
+Hypoxia
+Ionizing Radiation
+Isolation
+Long Duration Spaceflight
+Low-LET Radiation
+Lunar Analog (1/6 G)
+Mars Analog (3/8 G)
+Mechanical Unloading
+Microgravity
+Neutron Exposure
+Neutron Radiation
+Non-Ionizing Radiation
+Orbital Environment
+Parabolic Flight
+Partial Gravity
+Plasma Environment
+Pressurized Cabin
+Proton Radiation
+Radiation (General)
+Reduced Pressure
+Regolith (Simulants like JSC-1A, LHS-1, MMS-1)
+Short Duration Spaceflight
+Simulated Microgravity
+Solar Particle Events
+Solar Radiation
+Space Analog Environment
+Space Habitat
+UV Radiation
+Vacuum
+Weightlessness
+X-ray
+Zero Gravity
+
+TISSUE & ORGAN TYPE (SUB-ORGANS & STRUCTURES)
+Animal
+Adipose
+Adrenal Glands
+Anus
+Bladder
+Blood
+Blood Vessels
+Bones
+Brain
+Breast / Udders
+Cartilage
+Cervix
+Connective
+Diaphragm
+Ears
+Epithelial
+Esophagus
+Eyes
+Fallopian Tubes
+Gallbladder
+Germinal Epithelium
+Hair
+Heart
+Hypothalamus
+Kidneys
+Lacrimal Gland
+Large Intestine / Bowel / Colon
+Liver
+Lungs
+Lymph Nodes
+Lymphoid
+Mammary Gland
+Mesentery
+Mouth
+Muscles
+Myeloid & Lymphoid Lineages
+Nails
+Nerves
+Nose
+Ovaries
+Pancreas
+Penis
+Pineal Gland
+Pituitary
+Prostate
+Salivary Gland
+Sebaceous Gland
+Skin
+Small Intestine / Bowel
+Spinal Cord / Column / Vertebrae
+Spleen
+Stomach
+Sweat Gland
+Tendons
+Testes
+Thymus
+Thyroid
+Trachea
+Ureters
+Urethra
+Uterus
+Vagina
+Plant
+Adventitious Root
+Aerenchyma
+Apical Meristem
+Bract
+Bud
+Bulb
+Cambium
+Carpels
+Coleoptile
+Collenchyma
+Columella
+Corm
+Cortex
+Cotyledon
+Cuticle
+Dermal
+Embryo
+Endosperm
+Epicotyl
+Epidermis
+Fibrous Root
+Flower
+Fruit
+Ground
+Hypocotyl
+Internode
+Lateral Meristems
+Lateral Roots
+Leaf
+Lenticels
+Meristematic
+Mesocotyl
+Mesophyll
+Micropyle
+Node
+Parenchyma
+Pericycle
+Periderm
+Petals
+Phloem
+Pith
+Plumule
+Radicle
+Rhizome
+Root
+Root Apical Meristem
+Root Cap
+Root Hairs
+Scale
+Sclerenchyma
+Seed
+Seed Coat
+Sepals
+Shoots
+Spine
+Stamens
+Stem
+Stolon / Runner
+Stomata
+Suspensor
+Taproot
+Tendril
+Trichomes
+Tuber
+Vascular
+Vascular Bundles
+Xylem
+Fungal
+Asci
+Fruiting Body (Sporocarp)
+Gills
+Hyphal
+Mycelium
+Rhizomorphs
+Sclerotia
+Sclerotium
+Sporangia
+Yeast Colonies
+Protista
+Anal Pore / Cytoproct
+Cilia / Flagella
+Colonial Aggregates
+Contractile Vacuole
+Cyst Layers
+Eyespot / Stigma
+Oral Groove / Cytostome
+Pellicle
+Slime Mold Plasmodium
+Bacteria
+Biofilm
+Capsule
+Flagellum
+Inclusion Bodies
+Mats / Sheaths
+Microcolony
+Nucleoid
+Pellicle
+Pili/Fimbriae
