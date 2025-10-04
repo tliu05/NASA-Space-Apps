@@ -2,8 +2,9 @@
 import React, { useState, useMemo } from 'react';
 import { Search, Filter, MessageSquare, TrendingUp, BookOpen, Beaker, X } from 'lucide-react';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import './App.css';
 
-// Mock data - replace with real publication data
+// Fake Data ----------------------------------------------------------------------------------------------
 const mockPublications = [
   {
     id: 1,
@@ -96,7 +97,10 @@ const topicData = [
   { name: 'Model Organisms', value: 89, color: '#8b5cf6' },
   { name: 'Other', value: 57, color: '#6b7280' }
 ];
+// ========================================================================================================
 
+
+// Main App Component -------------------------------------------------------------------------------------
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOrganism, setSelectedOrganism] = useState('All');
@@ -111,15 +115,15 @@ function App() {
   // Filter publications
   const filteredPublications = useMemo(() => {
     return mockPublications.filter(pub => {
-      const matchesSearch = searchQuery === '' || 
+      const matchesSearch = searchQuery === '' ||
         pub.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         pub.abstract.toLowerCase().includes(searchQuery.toLowerCase()) ||
         pub.keywords.some(k => k.toLowerCase().includes(searchQuery.toLowerCase()));
-      
+
       const matchesOrganism = selectedOrganism === 'All' || pub.organism === selectedOrganism;
       const matchesYear = selectedYear === 'All' || pub.year.toString() === selectedYear;
       const matchesTopic = selectedTopic === 'All' || pub.topic === selectedTopic;
-      
+
       return matchesSearch && matchesOrganism && matchesYear && matchesTopic;
     });
   }, [searchQuery, selectedOrganism, selectedYear, selectedTopic]);
@@ -135,7 +139,7 @@ function App() {
 
     try {
       // Build context from publications
-      const publicationsContext = mockPublications.map(pub => 
+      const publicationsContext = mockPublications.map(pub =>
         `Title: ${pub.title}\nAuthors: ${pub.authors}\nYear: ${pub.year}\nAbstract: ${pub.abstract}\n`
       ).join('\n---\n');
 
@@ -166,7 +170,7 @@ User Question: ${chatInput}`
         role: 'assistant',
         content: data.content[0].text
       };
-      
+
       setChatMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
       console.error('Chat error:', error);
@@ -240,7 +244,7 @@ User Question: ${chatInput}`
                 <CartesianGrid strokeDasharray="3 3" stroke="#ffffff20" />
                 <XAxis dataKey="year" stroke="#fff" />
                 <YAxis stroke="#fff" />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #3b82f6' }}
                 />
                 <Line type="monotone" dataKey="count" stroke="#3b82f6" strokeWidth={2} />
@@ -264,7 +268,7 @@ User Question: ${chatInput}`
                     <Cell key={index} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip 
+                <Tooltip
                   contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #3b82f6' }}
                 />
               </PieChart>
@@ -285,7 +289,7 @@ User Question: ${chatInput}`
                 className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            
+
             <div className="flex gap-2 flex-wrap md:flex-nowrap">
               <select
                 value={selectedOrganism}
@@ -318,7 +322,7 @@ User Question: ${chatInput}`
               </select>
             </div>
           </div>
-          
+
           <div className="mt-2 text-sm text-gray-300">
             Showing {filteredPublications.length} of {mockPublications.length} publications
           </div>
@@ -336,11 +340,11 @@ User Question: ${chatInput}`
                 <h3 className="text-xl font-semibold text-blue-300 flex-1">{pub.title}</h3>
                 <span className="text-sm bg-blue-600/30 px-3 py-1 rounded-full ml-4">{pub.year}</span>
               </div>
-              
+
               <p className="text-sm text-gray-300 mb-3">{pub.authors}</p>
-              
+
               <p className="text-gray-200 mb-3 line-clamp-2">{pub.abstract}</p>
-              
+
               <div className="flex flex-wrap gap-2 mb-2">
                 <span className="text-xs bg-green-600/30 px-2 py-1 rounded">{pub.organism}</span>
                 <span className="text-xs bg-purple-600/30 px-2 py-1 rounded">{pub.topic}</span>
@@ -348,7 +352,7 @@ User Question: ${chatInput}`
                   <span key={cond} className="text-xs bg-orange-600/30 px-2 py-1 rounded">{cond}</span>
                 ))}
               </div>
-              
+
               <div className="text-xs text-gray-400">
                 {pub.citations} citations • Keywords: {pub.keywords.join(', ')}
               </div>
@@ -369,7 +373,7 @@ User Question: ${chatInput}`
               <X className="w-5 h-5" />
             </button>
           </div>
-          
+
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {chatMessages.length === 0 && (
               <div className="text-center text-gray-400 mt-8">
@@ -377,7 +381,7 @@ User Question: ${chatInput}`
                 <p className="text-sm">Try: "What do we know about bone density loss?"</p>
               </div>
             )}
-            
+
             {chatMessages.map((msg, idx) => (
               <div
                 key={idx}
@@ -390,14 +394,14 @@ User Question: ${chatInput}`
                 <div className="text-sm">{msg.content}</div>
               </div>
             ))}
-            
+
             {isLoading && (
               <div className="bg-white/10 p-3 rounded-lg mr-8">
                 <div className="text-sm text-gray-400">Thinking...</div>
               </div>
             )}
           </div>
-          
+
           <div className="p-4 border-t border-white/20">
             <div className="flex gap-2">
               <input
@@ -431,9 +435,9 @@ User Question: ${chatInput}`
                 <X className="w-6 h-6" />
               </button>
             </div>
-            
+
             <p className="text-gray-300 mb-4">{selectedPaper.authors} ({selectedPaper.year})</p>
-            
+
             <div className="flex flex-wrap gap-2 mb-4">
               <span className="text-sm bg-green-600/30 px-3 py-1 rounded">{selectedPaper.organism}</span>
               <span className="text-sm bg-purple-600/30 px-3 py-1 rounded">{selectedPaper.topic}</span>
@@ -441,14 +445,14 @@ User Question: ${chatInput}`
                 <span key={cond} className="text-sm bg-orange-600/30 px-3 py-1 rounded">{cond}</span>
               ))}
             </div>
-            
+
             <h3 className="text-lg font-semibold mb-2">Abstract</h3>
             <p className="text-gray-200 mb-4">{selectedPaper.abstract}</p>
-            
+
             <h3 className="text-lg font-semibold mb-2">Details</h3>
             <p className="text-gray-300 mb-2">Citations: {selectedPaper.citations}</p>
             <p className="text-gray-300">Keywords: {selectedPaper.keywords.join(', ')}</p>
-            
+
             <button
               onClick={() => {
                 setSelectedPaper(null);
@@ -466,5 +470,7 @@ User Question: ${chatInput}`
     </div>
   );
 }
+// ========================================================================================================
+
 
 export default App;
