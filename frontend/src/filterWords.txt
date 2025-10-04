@@ -1,5 +1,5 @@
-PUBLICATION TYPE
-Accepted_Manuscript
+>PUBLICATION TYPE
+Accepted Manuscript
 Adaptive Clinical Trial
 Addressa
 Autobiography
@@ -22,9 +22,9 @@ Conference_Paper
 Congress
 Consensus Development Conference
 Consensus Development Conference, NIH
-CONTRACTOR_OR_GRANTEE_REPORT
-Contractor_Report
-CONTRIBUTION_TO_LARGER_WORK
+Contrator or Grantee Report
+Contractor Report
+Contribution to Larger Work
 Controlled Clinical Trial
 Corrected and Republished Article
 Dataset
@@ -85,16 +85,8 @@ Video-Audio Media
 Webcast
 White Paper
 
-BIOLOGICAL CLASSIFICATIONS
-Animal
-Bacteria
-Fungi
-Plant
-Protista
-Virus
-
-CELL & ORGANELLE TYPES
-Animal
+>BIOLOGICAL CLASSIFICATIONS
+>>Animal
 Adipocytes
 Astrocytes
 Basophils
@@ -160,7 +152,8 @@ Stem / Totipotent
 Thrombocytes/Platelets
 Thymocytes
 Vesicles
-Bacteria
+
+>>Bacteria
 Acid-fast
 Aerotolerant Anaerobes
 Bacillus / pl. Bacilli
@@ -193,7 +186,8 @@ Spirillum
 Spirochete
 Thylakoid Membranes
 Vibrio
-Fungal
+
+>>Fungal
 Appressoria
 Ascospores
 Basidiospores
@@ -219,7 +213,8 @@ Sporangiospores
 Vacuole
 Yeast
 Zygospores
-Plant
+
+>>Plant
 Amyloplasts
 Atrichoblast
 Casparian Strip
@@ -260,7 +255,8 @@ Vessel Elements
 Xylem
 Xylem Fibers
 Xylem Parenchyma
-Protista
+
+>>Protista
 Amoeboid
 Autotrophic
 Chloroplasts
@@ -285,7 +281,8 @@ Photosynthetic/Algal
 Plasma Membrane
 Ribosomes
 Slime Mold Plasmodium
-Viral
+
+>>Viral
 Complex
 DNA
 Helical
@@ -293,8 +290,8 @@ Icosahedral
 Retro
 RNA
 Segmented
-FLIGHT PLATFORM
-Any value
+
+>FLIGHT PLATFORM
 Autonomous Spacecraft (e.g., SpaceX Dragon, Sierra Nevada Dream Chaser)
 Balloon Platforms (High Altitude)
 Beyond Earth Orbit (BEO)
@@ -325,8 +322,8 @@ Tethered Aerostats
 Tundra or Molniya Orbits (e.g., weather, comms for polar regions)
 Voyager 1 & 2
 Zero-pressure & Superpressure Balloons
-HARDWARE (SIMULATORS, CHAMBERS, & ALTERATION DEVICES)
-Any value
+
+>HARDWARE (SIMULATORS, CHAMBERS, & ALTERATION DEVICES)
 1D Clinostat
 20G Centrifuge
 2D Clinostat
@@ -589,8 +586,7 @@ yuri - ScienceBox
 yuri - ScienceShell
 yuri - ScienceTaxi
 
-SPACE VARIABLES, ENVIRONMENTS, & CONDITIONS
-Any value
+>SPACE VARIABLES, ENVIRONMENTS, & CONDITIONS
 1G Control
 Alpha Particles
 Artificial Gravity
@@ -644,8 +640,8 @@ Weightlessness
 X-ray
 Zero Gravity
 
-TISSUE & ORGAN TYPE (SUB-ORGANS & STRUCTURES)
-Animal
+>TISSUE & ORGAN TYPE (SUB-ORGANS & STRUCTURES)
+>>Animal
 Adipose
 Adrenal Glands
 Anus
@@ -707,7 +703,8 @@ Ureters
 Urethra
 Uterus
 Vagina
-Plant
+
+>>Plant
 Adventitious Root
 Aerenchyma
 Apical Meristem
@@ -775,7 +772,8 @@ Tuber
 Vascular
 Vascular Bundles
 Xylem
-Fungal
+
+>>Fungal
 Asci
 Fruiting Body (Sporocarp)
 Gills
@@ -796,7 +794,8 @@ Eyespot / Stigma
 Oral Groove / Cytostome
 Pellicle
 Slime Mold Plasmodium
-Bacteria
+
+>>Bacteria
 Biofilm
 Capsule
 Flagellum
