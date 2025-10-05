@@ -6,8 +6,10 @@ import os
 
 # --- File paths (assume in same folder as script) ---
 script_dir = os.path.dirname(os.path.abspath(__file__))
-csv_path = os.path.join(script_dir, "results_pruned.csv")           # input CSV
-output_path = os.path.join(script_dir, "matrix.csv")     # output CSV
+csv_path = os.path.join(script_dir, "results_pruned.csv")                   # input CSV
+matrixCSV_path = os.path.join(script_dir, "matrix.csv")                     # output CSV num 1
+similarity_matrix_path = os.path.join(script_dir, "similarity_matrix.csv")  # output CSV num 2
+full_graph_path = os.path.join(script_dir, "full_similarity_graph.html")    # output HTML
 
 # Step 1: Read websites from CSV
 df = pd.read_csv(csv_path)
@@ -32,12 +34,12 @@ similarity_matrix = np.zeros((len(vectors), len(vectors)))
 for i in range(len(vectors)):
     for j in range(len(vectors)):
         similarity_matrix[i][j] = calculate_cosine_similarity(vectors[i], vectors[j])
-np.savetxt("similarity_matrix.csv", similarity_matrix, delimiter=",")# save similarity matrix as csv
+np.savetxt(similarity_matrix_path, similarity_matrix, delimiter=",")# save similarity matrix as csv
 similarity_df = pd.DataFrame(similarity_matrix)
-similarity_df.to_csv(output_path, index=False)
+similarity_df.to_csv(matrixCSV_path, index=False)
 
 # Load the similarity matrix from the CSV file without headers
-similarity_matrix = pd.read_csv("similarity_matrix.csv",header=None)
+similarity_matrix = pd.read_csv(similarity_matrix_path,header=None)
 matrix = similarity_matrix.to_numpy()
 
 # # Create a graph from the similarity matrix
@@ -120,7 +122,7 @@ import networkx as nx
 import plotly.graph_objects as go
 
 # Load the full similarity matrix
-df = pd.read_csv("similarity_matrix.csv", header=None)
+df = pd.read_csv(similarity_matrix_path, header=None)
 
 # Drop the first column if it's an index or non-numeric
 if not pd.api.types.is_numeric_dtype(df.iloc[:, 0]):
@@ -202,5 +204,5 @@ fig = go.Figure(data=[edge_trace, node_trace],
                 ))
 
 # Save the interactive graph
-fig.write_html("full_similarity_graph.html")
+fig.write_html(full_graph_path)
 print("Graph saved as 'full_similarity_graph.html'")
