@@ -51,24 +51,23 @@ def create_figure(highlight_node=None, top_neighbors=None, force_edges=None):
     edge_x = []
     edge_y = []
     edge_colors = []
+
     draw_threshold = 0.9
+    selected_cluster = labels[highlight_node] if highlight_node is not None else None
 
     for edge in G.edges(data=True):
         i, j = edge[0], edge[1]
         weight = edge[2]['weight']
+        same_cluster = (labels[i] == selected_cluster and labels[j] == selected_cluster)
         if weight > draw_threshold or (force_edges and ((i, j) in force_edges or (j, i) in force_edges)):
             x0, y0 = pos[i]
             x1, y1 = pos[j]
             edge_x += [x0, x1, None]
             edge_y += [y0, y1, None]
-            edge_colors.append('orange' if force_edges and ((i, j) in force_edges or (j, i) in force_edges) else '#888')
-
-    if force_edges:
-        for i, j in force_edges:
-            if not G.has_edge(i, j):
-                edge_x += [pos[i][0], pos[j][0], None]
-                edge_y += [pos[i][1], pos[j][1], None]
+            if force_edges and ((i, j) in force_edges or (j, i) in force_edges):
                 edge_colors.append('orange')
+            else:
+                edge_colors.append('#888' if not same_cluster else '#000')
 
     edge_trace = go.Scatter(
         x=edge_x,
@@ -89,6 +88,8 @@ def create_figure(highlight_node=None, top_neighbors=None, force_edges=None):
         node_y.append(y)
         cluster_id = labels[node]
         base_color = cluster_color_map.get(cluster_id, '#000')
+        in_selected_cluster = (selected_cluster is None or cluster_id == selected_cluster)
+
         if node == highlight_node:
             node_color.append('red')
             node_text.append(f"{node}: {metadata.iloc[node]['Title']}")
@@ -96,7 +97,7 @@ def create_figure(highlight_node=None, top_neighbors=None, force_edges=None):
             node_color.append('orange')
             node_text.append(f"{node}: {metadata.iloc[node]['Title']}")
         else:
-            node_color.append(base_color)
+            node_color.append(base_color if in_selected_cluster else '#ccc')
             node_text.append("")  # Hide label unless clicked
 
     node_trace = go.Scatter(
@@ -115,7 +116,7 @@ def create_figure(highlight_node=None, top_neighbors=None, force_edges=None):
 
     fig = go.Figure(data=[edge_trace, node_trace],
                     layout=go.Layout(
-                        # title=dict(text='Interactive Similarity Graph (KMeans)', x=0.5),
+                        title=dict(text='Interactive Similarity Graph (KMeans)', x=0.5),
                         showlegend=False,
                         hovermode='closest',
                         margin=dict(b=20, l=5, r=5, t=40),
@@ -123,6 +124,7 @@ def create_figure(highlight_node=None, top_neighbors=None, force_edges=None):
                         yaxis=dict(showgrid=False, zeroline=False)
                     ))
     return fig
+
 
 # Dash app
 app = dash.Dash(__name__)
@@ -147,19 +149,18 @@ def update_graph(clickData):
     top_neighbors = [i for i in top_indices if i != node_id][:5]
     force_edges = [(node_id, i) for i in top_neighbors]
 
-    # info = []
-    # info.append(html.H4(f"Selected Node: {metadata.iloc[node_id]['Title']}"))
-    # info.append(html.A("Link", href=metadata.iloc[node_id]['Link'], target="_blank"))
-    # info.append(html.H5("Top 5 Similar Articles:"))
-    # for idx in top_neighbors:
-    #     info.append(html.P([
-    #         html.Strong(metadata.iloc[idx]['Title']),
-    #         html.Br(),
-    #         html.A("Link", href=metadata.iloc[idx]['Link'], target="_blank")
-    #     ]))
+    info = []
+    info.append(html.H4(f"Selected Node: {metadata.iloc[node_id]['Title']}"))
+    info.append(html.A("Link", href=metadata.iloc[node_id]['Link'], target="_blank"))
+    info.append(html.H5("Top 5 Similar Articles:"))
+    for idx in top_neighbors:
+        info.append(html.P([
+            html.Strong(metadata.iloc[idx]['Title']),
+            html.Br(),
+            html.A("Link", href=metadata.iloc[idx]['Link'], target="_blank")
+        ]))
 
-    # return create_figure(highlight_node=node_id, top_neighbors=top_neighbors, force_edges=force_edges), info
-
+    return create_figure(highlight_node=node_id, top_neighbors=top_neighbors, force_edges=force_edges), info
 
 if __name__ == '__main__':
     app.run(debug=True)
