@@ -52,7 +52,7 @@ def create_figure(highlight_node=None, top_neighbors=None, force_edges=None):
     edge_y = []
     edge_colors = []
 
-    draw_threshold = 0.9
+    draw_threshold = .9
     selected_cluster = labels[highlight_node] if highlight_node is not None else None
 
     for edge in G.edges(data=True):
@@ -140,19 +140,24 @@ app.layout = html.Div([
     Input('graph', 'clickData')
 )
 def update_graph(clickData):
-    # if clickData is None:
-    #     return create_figure(), "Click a node to see details."
+    if clickData is None:
+        # Reset to default view
+        return create_figure(), "Click a node to see details."
+
+    # Node was clicked
     point = clickData['points'][0]
     node_id = int(point['pointIndex'])
+
     similarities = sim_matrix[:, node_id]
     top_indices = np.argsort(similarities)[::-1]
     top_neighbors = [i for i in top_indices if i != node_id][:5]
     force_edges = [(node_id, i) for i in top_neighbors]
 
-    info = []
-    info.append(html.H4(f"Selected Node: {metadata.iloc[node_id]['Title']}"))
-    info.append(html.A("Link", href=metadata.iloc[node_id]['Link'], target="_blank"))
-    info.append(html.H5("Top 5 Similar Articles:"))
+    info = [
+        html.H4(f"Selected Node: {metadata.iloc[node_id]['Title']}"),
+        html.A("Link", href=metadata.iloc[node_id]['Link'], target="_blank"),
+        html.H5("Top 5 Similar Articles:")
+    ]
     for idx in top_neighbors:
         info.append(html.P([
             html.Strong(metadata.iloc[idx]['Title']),
