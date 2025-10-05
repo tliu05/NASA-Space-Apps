@@ -149,16 +149,17 @@ function App() {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "x-api-key": process.env.REACT_APP_ANTHROPIC_API_KEY, 
+            "anthropic-version": "2023-06-01"
         },
         body: JSON.stringify({
-            model: "claude-sonnet-4-20250514",
+            model: "claude-3-5-sonnet-20240620",
             max_tokens: 1000,
             messages: [
             {
                 role: "user",
-                content: `You are an AI assistant helping scientists explore NASA space biology research. 
-                        Based on the following publications, answer the user's question. 
-                        Be specific and cite relevant studies when possible.
+                content: `You are an AI assistant helping scientists explore NASA space biology research.
+                        Based on the following publications, answer the user's question.
                         Publications:
                         ${publicationsContext}
                         User Question: ${chatInput}`
@@ -170,7 +171,7 @@ function App() {
         const data = await response.json();
         const assistantMessage = {
         role: 'assistant',
-        content: data.content[0].text
+        content: data.content?.[0]?.text || "Sorry, I couldn't parse a response."
         };
 
         setChatMessages(prev => [...prev, assistantMessage]);
@@ -193,246 +194,241 @@ function App() {
 
     // Main render
 	return (
-	  <div className="app-container">
-		{/* Header */}
-		<header className="app-header">
-		  <div className="header-inner">
-			<div className="header-left">
-			  <Beaker className="logo-icon" />
-			  <div>
-				<h1 className="header-title">NASA Space Biology Knowledge Engine</h1>
-				<p className="header-subtitle">Exploring 608 Publications</p>
-			  </div>
-			</div>
-			<button onClick={() => setShowChat(!showChat)} className="btn">
-			  <MessageSquare className="icon" />
-			  AI Assistant
-			</button>
-		  </div>
-		</header>
+        <div className="app-container">
+            {/* Header */}
+            <header className="app-header">
+                <div className="header-inner">
+                    <div className="header-left">
+                        <div>
+                            <h1 className="header-title">NASA Space Biology Knowledge Engine</h1>
+                            <p className="header-subtitle">Exploring 608 Publications</p>
+                        </div>
+                    </div>
+                    <button onClick={() => setShowChat(!showChat)} className="btn">
+                        <MessageSquare className="icon" />
+                        AI Assistant
+                    </button>
+                </div>
+            </header>
 
-		<div className="main-content">
-		  {/* Stats Overview */}
-		  <div className="stats-grid">
-			<div className="stat-card">
-			  <div className="stat-value">608</div>
-			  <div className="stat-label">Total Publications</div>
-			</div>
-			<div className="stat-card">
-			  <div className="stat-value text-green">182</div>
-			  <div className="stat-label">Plant Studies</div>
-			</div>
-			<div className="stat-card">
-			  <div className="stat-value text-purple">156</div>
-			  <div className="stat-label">Human Studies</div>
-			</div>
-			<div className="stat-card">
-			  <div className="stat-value text-orange">2019–2024</div>
-			  <div className="stat-label">Year Range</div>
-			</div>
-		  </div>
+            <div className="main-content">
+                {/* Stats Overview */}
+                <div className="stats-grid">
+                    <div className="stat-card">
+                        <div className="stat-value">608</div>
+                        <div className="stat-label">Total Publications</div>
+                    </div>
+                    <div className="stat-card">
+                        <div className="stat-value text-green">182</div>
+                        <div className="stat-label">Plant Studies</div>
+                    </div>
+                    <div className="stat-card">
+                        <div className="stat-value text-purple">156</div>
+                        <div className="stat-label">Human Studies</div>
+                    </div>
+                    <div className="stat-card">
+                        <div className="stat-value text-orange">2019–2024</div>
+                        <div className="stat-label">Year Range</div>
+                    </div>
+                </div>
 
-		  {/* Visualizations */}
-		  <div className="viz-grid">
-			<div className="viz-card">
-			  <h3 className="viz-title">
-				<TrendingUp className="icon" />
-				Publications Over Time
-			  </h3>
-			  <ResponsiveContainer width="100%" height={200}>
-				<LineChart data={yearlyData}>
-				  <CartesianGrid strokeDasharray="3 3" className="chart-grid" />
-				  <XAxis dataKey="year" className="chart-axis" />
-				  <YAxis className="chart-axis" />
-				  <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #3b82f6' }} />
-				  <Line type="monotone" dataKey="count" stroke="#3b82f6" strokeWidth={2} />
-				</LineChart>
-			  </ResponsiveContainer>
-			</div>
+                {/* Visualizations */}
+                <div className="viz-grid">
+                    {/* Graph over time ----------------------------------------------- */}
+                    <div className="viz-card">
+                        <h3 className="viz-title">
+                            {/* <TrendingUp className="icon" /> */}
+                            Publications Over Time
+                        </h3>
+                        <ResponsiveContainer width="100%" height={200}>
+                            <LineChart data={yearlyData}>
+                                <CartesianGrid strokeDasharray="3 3" className="chart-grid" />
+                                <XAxis dataKey="year" className="chart-axis" />
+                                <YAxis className="chart-axis" />
+                                <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #3b82f6' }} />
+                                <Line type="monotone" dataKey="count" stroke="#3b82f6" strokeWidth={2} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                    {/* --------------------------------------------------------------- */}
 
-			<div className="viz-card">
-			  <h3 className="viz-title">Research Topics</h3>
-			  <ResponsiveContainer width="100%" height={200}>
-				<PieChart>
-				  <Pie
-					data={topicData}
-					cx="50%"
-					cy="50%"
-					outerRadius={80}
-					dataKey="value"
-					label={({ name, value }) => `${name}: ${value}`}
-				  >
-					{topicData.map((entry, index) => (
-					  <Cell key={index} fill={entry.color} />
-					))}
-				  </Pie>
-				  <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #3b82f6' }} />
-				</PieChart>
-			  </ResponsiveContainer>
-			</div>
-		  </div>
+                    {/* Pie Graph ----------------------------------------------------- */}
+                    <div className="viz-card">
+                        <h3 className="viz-title">Research Topics</h3>
+                        <ResponsiveContainer width="100%" height={200}>
+                            <PieChart>
+                                <Pie
+                                    data={topicData}
+                                    cx="50%"
+                                    cy="50%"
+                                    outerRadius={80}
+                                    dataKey="value"
+                                    label={({ name, value }) => `${name}: ${value}`}
+                                    >
+                                    {topicData.map((entry, index) => (
+                                        <Cell key={index} fill={entry.color} />
+                                    ))}
+                                </Pie>
+                                <Tooltip contentStyle={{ backgroundColor: '#2F406E', border: '1px solid #3b82f6' }} />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </div>
+                    {/* --------------------------------------------------------------- */}
+                </div>
 
-		  {/* Search + Filters */}
-		  <div className="filter-panel">
-			<div className="filter-row">
-			  <div className="search-box">
-				<Search className="search-icon" />
-				<input
-				  type="text"
-				  placeholder="Search publications..."
-				  value={searchQuery}
-				  onChange={(e) => setSearchQuery(e.target.value)}
-				  className="search-input"
-				/>
-			  </div>
+                {/* Search + Filters */}
+                <div className="filter-panel">
+                    <div className="filter-row">
+                        <div className="search-box">
+                            <Search className="search-icon" />
+                            <input	type="text" placeholder="Search publications..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="search-input"/>
+                        </div>
 
-			  <div className="filter-selects">
-				<select value={selectedOrganism} onChange={(e) => setSelectedOrganism(e.target.value)} className="filter-select">
-				  {organisms.map(org => (
-					<option key={org} value={org}>{org}</option>
-				  ))}
-				</select>
+                        <div className="filter-selects">
+                            <select value={selectedOrganism} onChange={(e) => setSelectedOrganism(e.target.value)} className="filter-select">
+                                {organisms.map(org => (
+                                    <option key={org} value={org}>{org}</option>
+                                ))}
+                            </select>
 
-				<select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} className="filter-select">
-				  {years.map(year => (
-					<option key={year} value={year}>{year}</option>
-				  ))}
-				</select>
+                            <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} className="filter-select">
+                                {years.map(year => (
+                                    <option key={year} value={year}>{year}</option>
+                                ))}
+                            </select>
 
-				<select value={selectedTopic} onChange={(e) => setSelectedTopic(e.target.value)} className="filter-select">
-				  {topics.map(topic => (
-					<option key={topic} value={topic}>{topic}</option>
-				  ))}
-				</select>
-			  </div>
-			</div>
+                            <select value={selectedTopic} onChange={(e) => setSelectedTopic(e.target.value)} className="filter-select">
+                                {topics.map(topic => (
+                                    <option key={topic} value={topic}>{topic}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
 
-			<div className="filter-count">
-			  Showing {filteredPublications.length} of {mockPublications.length} publications
-			</div>
-		  </div>
+                    <div className="filter-count">
+                        Showing {filteredPublications.length} of {mockPublications.length} publications
+                    </div>
+                </div>
 
-		  {/* Publications List */}
-		  <div className="pub-list">
-			{filteredPublications.map(pub => (
-			  <div key={pub.id} className="publication-card" onClick={() => setSelectedPaper(pub)}>
-				<div className="pub-header">
-				  <h3 className="publication-title">{pub.title}</h3>
-				  <span className="pub-year">{pub.year}</span>
-				</div>
+                {/* Publications List */}
+                <div className="pub-list">
+                    {filteredPublications.map(pub => (
+                    <div key={pub.id} className="publication-card" onClick={() => setSelectedPaper(pub)}>
+                        <div className="pub-header">
+                            <h3 className="publication-title">{pub.title}</h3>
+                            <span className="pub-year">{pub.year}</span>
+                        </div>
 
-				<p className="publication-meta">{pub.authors}</p>
-				<p className="publication-abstract">{pub.abstract}</p>
+                        <p className="publication-meta">{pub.authors}</p>
+                        <p className="publication-abstract">{pub.abstract}</p>
 
-				<div className="pub-tags">
-				  <span className="tag tag-green">{pub.organism}</span>
-				  <span className="tag tag-purple">{pub.topic}</span>
-				  {pub.conditions.map(cond => (
-					<span key={cond} className="tag tag-orange">{cond}</span>
-				  ))}
-				</div>
+                        <div className="pub-tags">
+                            <span className="tag tag-green">{pub.organism}</span>
+                            <span className="tag tag-purple">{pub.topic}</span>
+                            {pub.conditions.map(cond => (
+                                <span key={cond} className="tag tag-orange">{cond}</span>
+                            ))}
+                        </div>
 
-				<div className="pub-extra">
-				  {pub.citations} citations • Keywords: {pub.keywords.join(', ')}
-				</div>
-			  </div>
-			))}
-		  </div>
-		</div>
+                        <div className="pub-extra">
+                            {pub.citations} citations • Keywords: {pub.keywords.join(', ')}
+                        </div>
+                    </div>
+                    ))}
+                </div>
+            </div>
 
-		{/* AI Chat Panel */}
-		{showChat && (
-		  <div className="chat-panel">
-			<div className="chat-header">
-			  <h3>
-				<MessageSquare className="icon" /> AI Research Assistant
-			  </h3>
-			  <button onClick={() => setShowChat(false)} className="close-btn">
-				<X className="icon" />
-			  </button>
-			</div>
+            {/* AI Chat Panel */}
+            {showChat && (
+            <div className="chat-panel">
+                <div className="chat-header">
+                    <h3>
+                        <MessageSquare className="icon" /> AI Research Assistant
+                    </h3>
+                    <button onClick={() => setShowChat(false)} className="close-btn">
+                        <X className="icon" />
+                    </button>
+                </div>
 
-			<div className="chat-messages">
-			  {chatMessages.length === 0 && (
-				<div className="chat-empty">
-				  <p className="mb-2">Ask me anything about the publications!</p>
-				  <p className="text-sm">Try: "What do we know about bone density loss?"</p>
-				</div>
-			  )}
+                <div className="chat-messages">
+                    {chatMessages.length === 0 && (
+                        <div className="chat-empty">
+                            <p className="mb-2">Ask me anything about the publications!</p>
+                            <p className="text-sm">Try: "What do we know about bone density loss?"</p>
+                        </div>
+                    )}
 
-			  {chatMessages.map((msg, idx) => (
-				<div key={idx} className={msg.role === 'user' ? "chat-message-user" : "chat-message-assistant"}>
-				  <div className="text-sm">{msg.content}</div>
-				</div>
-			  ))}
+                    {chatMessages.map((msg, idx) => (
+                        <div key={idx} className={msg.role === 'user' ? "chat-message-user" : "chat-message-assistant"}>
+                            <div className="text-sm">{msg.content}</div>
+                        </div>
+                    ))}
 
-			  {isLoading && (
-				<div className="chat-message-assistant">
-				  <div className="text-sm">Thinking...</div>
-				</div>
-			  )}
-			</div>
+                    {isLoading && (
+                        <div className="chat-message-assistant">
+                            <div className="text-sm">Thinking...</div>
+                        </div>
+                    )}
+                </div>
 
-			<div className="chat-input-area">
-			  <input
-				type="text"
-				value={chatInput}
-				onChange={(e) => setChatInput(e.target.value)}
-				onKeyPress={(e) => e.key === 'Enter' && sendChatMessage()}
-				placeholder="Ask about the research..."
-				className="chat-input"
-				disabled={isLoading}
-			  />
-			  <button onClick={sendChatMessage} disabled={isLoading} className="btn">
-				Send
-			  </button>
-			</div>
-		  </div>
-		)}
+                <div className="chat-input-area">
+                    <input	type="text" value={chatInput} onChange={(e) => setChatInput(e.target.value)}
+                            onKeyPress={(e) => e.key === 'Enter' && sendChatMessage()}
+                            placeholder="Ask about the research..."
+                            className="chat-input"
+                            disabled={isLoading}
+                            />
+                    <button onClick={sendChatMessage} disabled={isLoading} className="btn">
+                    Send
+                    </button>
+                </div>
+            </div>
+            )}
 
-		{/* Paper Detail Modal */}
-		{selectedPaper && (
-		  <div className="modal-overlay" onClick={() => setSelectedPaper(null)}>
-			<div className="modal" onClick={(e) => e.stopPropagation()}>
-			  <div className="modal-header">
-				<h2 className="modal-title">{selectedPaper.title}</h2>
-				<button onClick={() => setSelectedPaper(null)} className="close-btn">
-				  <X className="icon" />
-				</button>
-			  </div>
+            {/* Paper Detail Modal */}
+            {selectedPaper && (
+            <div className="modal-overlay" onClick={() => setSelectedPaper(null)}>
+                <div className="modal" onClick={(e) => e.stopPropagation()}>
+                    <div className="modal-header">
+                        <h2 className="modal-title">{selectedPaper.title}</h2>
+                        <button onClick={() => setSelectedPaper(null)} className="close-btn">
+                        <X className="icon" />
+                        </button>
+                    </div>
 
-			  <p className="publication-meta">{selectedPaper.authors} ({selectedPaper.year})</p>
+                    <p className="publication-meta">{selectedPaper.authors} ({selectedPaper.year})</p>
 
-			  <div className="pub-tags">
-				<span className="tag tag-green">{selectedPaper.organism}</span>
-				<span className="tag tag-purple">{selectedPaper.topic}</span>
-				{selectedPaper.conditions.map(cond => (
-				  <span key={cond} className="tag tag-orange">{cond}</span>
-				))}
-			  </div>
+                    <div className="pub-tags">
+                        <span className="tag tag-green">{selectedPaper.organism}</span>
+                        <span className="tag tag-purple">{selectedPaper.topic}</span>
+                        {selectedPaper.conditions.map(cond => (
+                        <span key={cond} className="tag tag-orange">{cond}</span>
+                        ))}
+                    </div>
 
-			  <h3 className="section-title">Abstract</h3>
-			  <p className="publication-abstract">{selectedPaper.abstract}</p>
+                    <h3 className="section-title">Abstract</h3>
+                    <p className="publication-abstract">{selectedPaper.abstract}</p>
 
-			  <h3 className="section-title">Details</h3>
-			  <p className="publication-meta">Citations: {selectedPaper.citations}</p>
-			  <p className="publication-meta">Keywords: {selectedPaper.keywords.join(', ')}</p>
+                    <h3 className="section-title">Details</h3>
+                    <p className="publication-meta">Citations: {selectedPaper.citations}</p>
+                    <p className="publication-meta">Keywords: {selectedPaper.keywords.join(', ')}</p>
 
-			  <button
-				onClick={() => {
-				  setSelectedPaper(null);
-				  setShowChat(true);
-				  setChatInput(`Tell me more about "${selectedPaper.title}"`);
-				}}
-				className="btn"
-			  >
-				<MessageSquare className="icon" />
-				Ask AI About This Paper
-			  </button>
-			</div>
-		  </div>
-		)}
-	  </div>
+                    <button
+                        onClick={() => {
+                        setSelectedPaper(null);
+                        setShowChat(true);
+                        setChatInput(`Tell me more about "${selectedPaper.title}"`);
+                        }}
+                        className="btn"
+                        >
+                        <MessageSquare className="icon" />
+                        Ask AI About This Paper
+                    </button>
+                </div>
+            </div>
+            )}
+        </div>
 	);
 }
 // ========================================================================================================

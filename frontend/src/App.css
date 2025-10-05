@@ -109,6 +109,11 @@ header {
   color: #d1d5db;
 }
 
+.filter-select {
+    color: rgb(255, 255, 255);
+    background: #2F406E;
+}
+
 /* Inputs and Selects */
 input[type="text"], select {
   padding: 0.5rem 0.75rem;
