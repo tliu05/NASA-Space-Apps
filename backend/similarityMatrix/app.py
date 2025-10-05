@@ -5,6 +5,7 @@ import numpy as np
 import networkx as nx
 import plotly.graph_objects as go
 from sklearn.cluster import KMeans
+from flask import jsonify, request
 
 # Load similarity matrix
 df = pd.read_csv("similarity_matrix.csv", header=None)
@@ -153,6 +154,7 @@ def update_graph(clickData):
     top_neighbors = [i for i in top_indices if i != node_id][:5]
     force_edges = [(node_id, i) for i in top_neighbors]
 
+<<<<<<< HEAD
     info = [
         html.H4(f"Selected Node: {metadata.iloc[node_id]['Title']}"),
         html.A("Link", href=metadata.iloc[node_id]['Link'], target="_blank"),
@@ -164,8 +166,59 @@ def update_graph(clickData):
             html.Br(),
             html.A("Link", href=metadata.iloc[idx]['Link'], target="_blank")
         ]))
+=======
+    info = []
+    # info.append(html.H4(f"Selected Node: {metadata.iloc[node_id]['Title']}"))
+    # info.append(html.A("Link", href=metadata.iloc[node_id]['Link'], target="_blank"))
+    # info.append(html.H5("Top 5 Similar Articles:"))
+    # for idx in top_neighbors:
+    #     info.append(html.P([
+    #         html.Strong(metadata.iloc[idx]['Title']),
+    #         html.Br(),
+    #         html.A("Link", href=metadata.iloc[idx]['Link'], target="_blank")
+    #     ]))
+    #     pass
+>>>>>>> joshua
 
     return create_figure(highlight_node=node_id, top_neighbors=top_neighbors, force_edges=force_edges), info
+
+
+
+
+@app.server.route('/api/top_neighbors', methods=['GET'])
+def get_top_neighbors():
+    node_id = int(request.args.get('node_id', -1))
+    if node_id < 0 or node_id >= sim_matrix.shape[0]:
+        return jsonify({'error': 'Invalid node_id'}), 400
+
+    similarities = sim_matrix[:, node_id]
+    top_indices = np.argsort(similarities)[::-1]
+    top_neighbors = [int(i) for i in top_indices if i != node_id][:5]
+
+    # Return metadata for top neighbors
+    neighbors_data = []
+    for idx in top_neighbors:
+        neighbors_data.append({
+            'id': int(idx),
+            'title': metadata.iloc[idx]['Title'],
+            'link': metadata.iloc[idx]['Link'],
+            'keywords': str(metadata.iloc[idx]['Keywords']).split(',') if 'Keywords' in metadata.columns else []
+        })
+    return jsonify({'top_neighbors': neighbors_data})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
