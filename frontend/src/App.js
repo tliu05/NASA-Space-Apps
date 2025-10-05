@@ -90,7 +90,9 @@ function App() {
             console.error('Chat error:', error);
             setChatMessages(prev => [...prev, {
             role: 'assistant',
-            content: 'Sorry, I encountered an error. Please try again.'
+            // content: 'Sorry, I encountered an error. Please try again.'
+            // we don't have an api key lol
+            content: 'Oof... ask a better question.'
             }]);
         } finally {
             setIsLoading(false);
@@ -123,7 +125,7 @@ function App() {
 
             <div className="graph-section">
                 <h2 className="section-title">Similarity Matrix Visualization</h2>
-                <div className="graph-container" style={{ height: '1000px' }}>
+                <div className="graph-container" style={{ height: '900px' }}>
                     <iframe
                         src="http://127.0.0.1:8050/"
                         title="Dash Similarity Matrix"
