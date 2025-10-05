@@ -99,13 +99,6 @@ function App() {
     // ---------------------------------------------------------------------------------------
 
 
-    // graph section -------------------------------------------------------------------------
-
-    
-
-    // ---------------------------------------------------------------------------------------
-
-
     // Main render
     return (
         <div className="app-container">
@@ -129,25 +122,15 @@ function App() {
             {/* Graph stuff */}
 
             <div className="graph-section">
-                <h2 className="section-title">PLACEHOLDER SECTION</h2>
-                <div className="graph-container">
-                <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={[
-                    { year: '2010', count: 5 },
-                    { year: '2011', count: 8 },
-                    { year: '2012', count: 12 },
-                    { year: '2013', count: 15 },
-                    { year: '2014', count: 20 },
-                    { year: '2015', count: 25 },
-                    { year: '2016', count: 30 }
-                    ]}>
-                    <Line type="monotone" dataKey="count" stroke="#8884d8" />
-                    <CartesianGrid stroke="#ccc" />
-                    <XAxis dataKey="year" />
-                    <YAxis />
-                    <Tooltip />
-                    </LineChart>
-                </ResponsiveContainer>
+                <h2 className="section-title">Similarity Matrix Visualization</h2>
+                <div className="graph-container" style={{ height: '1000px' }}>
+                    <iframe
+                        src="http://127.0.0.1:8050/"
+                        title="Dash Similarity Matrix"
+                        width="100%"
+                        height="100%"
+                        style={{ border: 'none' }}
+                    />
                 </div>
             </div>
             
