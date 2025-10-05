@@ -84,7 +84,6 @@ Validation Study
 Video-Audio Media
 Webcast
 White Paper
-
 BIOLOGICAL CLASSIFICATIONS
 Animal
 Bacteria
@@ -92,7 +91,6 @@ Fungi
 Plant
 Protista
 Virus
-
 CELL & ORGANELLE TYPES
 Animal
 Adipocytes
@@ -588,7 +586,6 @@ XROOTS
 yuri - ScienceBox
 yuri - ScienceShell
 yuri - ScienceTaxi
-
 SPACE VARIABLES, ENVIRONMENTS, & CONDITIONS
 Any value
 1G Control
@@ -643,7 +640,6 @@ Vacuum
 Weightlessness
 X-ray
 Zero Gravity
-
 TISSUE & ORGAN TYPE (SUB-ORGANS & STRUCTURES)
 Animal
 Adipose
