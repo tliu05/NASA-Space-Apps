@@ -1,10 +1,10 @@
-
 import dash
 from dash import dcc, html, Input, Output
 import pandas as pd
 import numpy as np
 import networkx as nx
 import plotly.graph_objects as go
+from sklearn.cluster import KMeans
 
 # Load similarity matrix
 df = pd.read_csv("similarity_matrix.csv", header=None)
@@ -16,12 +16,12 @@ if rows != cols:
     df = df.iloc[:min_dim, :min_dim]
 sim_matrix = df.to_numpy()
 
-# Load catabase.csv from backend directory
+# Load metadata
 metadata = pd.read_csv("../database.csv")
 
 # Create graph with thresholded edges
 G = nx.Graph()
-threshold = 0.5
+threshold = 0
 num_nodes = sim_matrix.shape[0]
 
 for i in range(num_nodes):
@@ -33,6 +33,16 @@ for i in range(num_nodes):
         if weight > threshold:
             G.add_edge(i, j, weight=weight)
 
+# Apply KMeans clustering
+n_clusters = 6  # You can adjust this number
+kmeans = KMeans(n_clusters=n_clusters, random_state=42)
+kmeans.fit(sim_matrix)
+labels = kmeans.labels_
+
+# Map cluster IDs to colors
+unique_clusters = list(set(labels))
+cluster_color_map = {cluster: f"hsl({(i * 360 / len(unique_clusters)) % 360}, 70%, 50%)" for i, cluster in enumerate(unique_clusters)}
+
 # Layout
 pos = nx.spring_layout(G, seed=42)
 
@@ -41,21 +51,18 @@ def create_figure(highlight_node=None, top_neighbors=None, force_edges=None):
     edge_x = []
     edge_y = []
     edge_colors = []
+    draw_threshold = 0.9
 
     for edge in G.edges(data=True):
         i, j = edge[0], edge[1]
         weight = edge[2]['weight']
-        if force_edges and ((i, j) in force_edges or (j, i) in force_edges):
-            color = 'orange'
-        elif highlight_node is not None and (i == highlight_node or j == highlight_node):
-            color = 'red'
-        else:
-            color = '#888'
-        edge_x += [pos[i][0], pos[j][0], None]
-        edge_y += [pos[i][1], pos[j][1], None]
-        edge_colors.append(color)
+        if weight > draw_threshold or (force_edges and ((i, j) in force_edges or (j, i) in force_edges)):
+            x0, y0 = pos[i]
+            x1, y1 = pos[j]
+            edge_x += [x0, x1, None]
+            edge_y += [y0, y1, None]
+            edge_colors.append('orange' if force_edges and ((i, j) in force_edges or (j, i) in force_edges) else '#888')
 
-    # Add forced edges (even if not in G)
     if force_edges:
         for i, j in force_edges:
             if not G.has_edge(i, j):
@@ -80,15 +87,17 @@ def create_figure(highlight_node=None, top_neighbors=None, force_edges=None):
         x, y = pos[node]
         node_x.append(x)
         node_y.append(y)
+        cluster_id = labels[node]
+        base_color = cluster_color_map.get(cluster_id, '#000')
         if node == highlight_node:
-            node_text.append(f"{node}: {metadata.iloc[node]['Title']}")
             node_color.append('red')
-        elif top_neighbors and node in top_neighbors:
             node_text.append(f"{node}: {metadata.iloc[node]['Title']}")
+        elif top_neighbors and node in top_neighbors:
             node_color.append('orange')
+            node_text.append(f"{node}: {metadata.iloc[node]['Title']}")
         else:
-            node_text.append("")
-            node_color.append('blue')
+            node_color.append(base_color)
+            node_text.append("")  # Hide label unless clicked
 
     node_trace = go.Scatter(
         x=node_x,
@@ -106,7 +115,7 @@ def create_figure(highlight_node=None, top_neighbors=None, force_edges=None):
 
     fig = go.Figure(data=[edge_trace, node_trace],
                     layout=go.Layout(
-                        title=dict(text='Interactive Similarity Graph', x=0.5),
+                        title=dict(text='Interactive Similarity Graph (KMeans)', x=0.5),
                         showlegend=False,
                         hovermode='closest',
                         margin=dict(b=20, l=5, r=5, t=40),
@@ -131,19 +140,13 @@ app.layout = html.Div([
 def update_graph(clickData):
     if clickData is None:
         return create_figure(), "Click a node to see details."
-
     point = clickData['points'][0]
     node_id = int(point['pointIndex'])
-
-    # Get top 5 similar nodes (regardless of threshold)
-    
-    similarities = sim_matrix[:, node_id]  # Use the column instead of the row
+    similarities = sim_matrix[:, node_id]
     top_indices = np.argsort(similarities)[::-1]
     top_neighbors = [i for i in top_indices if i != node_id][:5]
-
     force_edges = [(node_id, i) for i in top_neighbors]
 
-    # Info display
     info = []
     info.append(html.H4(f"Selected Node: {metadata.iloc[node_id]['Title']}"))
     info.append(html.A("Link", href=metadata.iloc[node_id]['Link'], target="_blank"))
