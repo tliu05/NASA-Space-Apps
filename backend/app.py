@@ -6,7 +6,7 @@ import numpy as np
 import networkx as nx
 import plotly.graph_objects as go
 
-# Load similarity matrix
+# Load similarity matrix :)
 df = pd.read_csv("similarity_matrix.csv", header=None)
 if not pd.api.types.is_numeric_dtype(df.iloc[:, 0]):
     df = df.drop(columns=[0])
