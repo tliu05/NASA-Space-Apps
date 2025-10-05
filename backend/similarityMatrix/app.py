@@ -6,7 +6,7 @@ import numpy as np
 import networkx as nx
 import plotly.graph_objects as go
 
-# Load similarity matrix :)
+# Load similarity matrix
 df = pd.read_csv("similarity_matrix.csv", header=None)
 if not pd.api.types.is_numeric_dtype(df.iloc[:, 0]):
     df = df.drop(columns=[0])
@@ -16,8 +16,8 @@ if rows != cols:
     df = df.iloc[:min_dim, :min_dim]
 sim_matrix = df.to_numpy()
 
-# Load metadata
-metadata = pd.read_csv("database.csv")
+# Load catabase.csv from backend directory
+metadata = pd.read_csv("../database.csv")
 
 # Create graph with thresholded edges
 G = nx.Graph()
