@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 # --- File paths (assume in same folder as script) ---
 script_dir = os.path.dirname(os.path.abspath(__file__))
-csv_path = os.path.join(script_dir, "test.csv")           # input CSV
+csv_path = os.path.join(script_dir, "database.csv")       # input CSV
 keywords_path = os.path.join(script_dir, "keywords.txt")  # keywords file
 output_path = os.path.join(script_dir, "results.csv")     # output CSV
 
