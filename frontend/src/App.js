@@ -30,14 +30,27 @@ function App() {
 
 
     // Filter publications -------------------------------------------------------------------
+    const [neighborFilter, setNeighborFilter] = useState(null);
+
+    const filterByNeighbors = async (nodeId) => {
+        const res = await fetch(`http://127.0.0.1:8050/api/top_neighbors?node_id=${nodeId}`);
+        const data = await res.json();
+        setNeighborFilter(data.top_neighbors.map(n => n.title));
+    };
+    
+    
     const filteredPublications = useMemo(() => {
-    return publications.filter(pub => {
-        const matchesSearch =
-        searchQuery === '' ||
-        pub.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        pub.keywords.some(k => k.toLowerCase().includes(searchQuery.toLowerCase()));
-        return matchesSearch;
-    });
+        let pubs = publications;
+        if (neighborFilter) {
+            pubs = pubs.filter(pub => neighborFilter.includes(pub.title));
+        }
+        return pubs.filter(pub => {
+            const matchesSearch =
+                searchQuery === '' ||
+                pub.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                pub.keywords.some(k => k.toLowerCase().includes(searchQuery.toLowerCase()));
+            return matchesSearch;
+        });
     }, [searchQuery]);
     // ---------------------------------------------------------------------------------------
 
@@ -141,38 +154,38 @@ function App() {
 
             {/* Main Content ----------------------------------------------------------------------------*/}
             <div className="main-content">
-            {/* Search */}
-            <div className="filter-panel">
-                <div className="filter-row">
-                <div className="search-box">
-                    <Search className="search-icon" />
-                    <input
-                    type="text"
-                    placeholder="Search publications..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="search-input"
-                    />
-                </div>
-                </div>
-                <div className="filter-count">
-                Showing {filteredPublications.length} of {publications.length} publications
-                </div>
-            </div>
-
-            {/* Publications List */}
-            <div className="pub-list">
-                {filteredPublications.map(pub => (
-                <div key={pub.id} className="publication-card" onClick={() => setSelectedPaper(pub)}>
-                    <div className="pub-header">
-                    <h3 className="publication-title">{pub.title}</h3>
+                {/* Search */}
+                <div className="filter-panel">
+                    <div className="filter-row">
+                    <div className="search-box">
+                        <Search className="search-icon" />
+                        <input
+                        type="text"
+                        placeholder="Search publications..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="search-input"
+                        />
                     </div>
-
-                    <p className="publication-meta">{pub.link}</p>
-                    <div className="pub-extra">Keywords: {pub.keywords.join(', ')}</div>
+                    </div>
+                    <div className="filter-count">
+                    Showing {filteredPublications.length} of {publications.length} publications
+                    </div>
                 </div>
-                ))}
-            </div>
+
+                {/* Publications List */}
+                <div className="pub-list">
+                    {filteredPublications.map(pub => (
+                    <div key={pub.id} className="publication-card" onClick={() => setSelectedPaper(pub)}>
+                        <div className="pub-header">
+                        <h3 className="publication-title">{pub.title}</h3>
+                        </div>
+
+                        <p className="publication-meta">{pub.link}</p>
+                        <div className="pub-extra">Keywords: {pub.keywords.join(', ')}</div>
+                    </div>
+                    ))}
+                </div>
             </div>
 
             {/* AI Chat Panel */}
