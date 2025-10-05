@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import requests
+import re
 from bs4 import BeautifulSoup
 
 # --- File paths (assume in same folder as script) ---
@@ -39,8 +40,7 @@ for _, row in df.iterrows():
         soup = BeautifulSoup(response.text, "xml")
         text = soup.get_text(" ", strip=True).lower()
 
-        # Binary presence for each keyword
-        keyword_hits = {kw: (1 if kw in text else 0) for kw in keywords}
+        keyword_hits = {kw: len(re.findall(rf'\b{re.escape(kw)}\b', text)) for kw in keywords}
 
         row_result = {"Title": title, "Link": link}
         row_result.update(keyword_hits)
