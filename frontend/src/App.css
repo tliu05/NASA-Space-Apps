@@ -247,3 +247,20 @@ input[type="text"]:focus, select:focus {
   padding: 1.5rem;
 }
 
+a:link {
+  color: pink;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: underline;
+}
