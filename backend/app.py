@@ -21,7 +21,7 @@ metadata = pd.read_csv("database.csv")
 
 # Create graph with thresholded edges
 G = nx.Graph()
-threshold = 0.75
+threshold = 0.5
 num_nodes = sim_matrix.shape[0]
 
 for i in range(num_nodes):
@@ -136,9 +136,11 @@ def update_graph(clickData):
     node_id = int(point['pointIndex'])
 
     # Get top 5 similar nodes (regardless of threshold)
+    
     similarities = sim_matrix[:, node_id]  # Use the column instead of the row
     top_indices = np.argsort(similarities)[::-1]
     top_neighbors = [i for i in top_indices if i != node_id][:5]
+
     force_edges = [(node_id, i) for i in top_neighbors]
 
     # Info display
