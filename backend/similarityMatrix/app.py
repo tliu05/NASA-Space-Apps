@@ -115,7 +115,7 @@ def create_figure(highlight_node=None, top_neighbors=None, force_edges=None):
 
     fig = go.Figure(data=[edge_trace, node_trace],
                     layout=go.Layout(
-                        title=dict(text='Interactive Similarity Graph (KMeans)', x=0.5),
+                        # title=dict(text='Interactive Similarity Graph (KMeans)', x=0.5),
                         showlegend=False,
                         hovermode='closest',
                         margin=dict(b=20, l=5, r=5, t=40),
@@ -127,7 +127,7 @@ def create_figure(highlight_node=None, top_neighbors=None, force_edges=None):
 # Dash app
 app = dash.Dash(__name__)
 app.layout = html.Div([
-    html.H2("Click a node to see top 5 similar articles"),
+    # html.H2("Click a node to see top 5 similar articles"),
     dcc.Graph(id='graph', figure=create_figure(), style={'height': '800px'}),
     html.Div(id='info', style={'marginTop': '20px'})
 ])
@@ -138,8 +138,8 @@ app.layout = html.Div([
     Input('graph', 'clickData')
 )
 def update_graph(clickData):
-    if clickData is None:
-        return create_figure(), "Click a node to see details."
+    # if clickData is None:
+    #     return create_figure(), "Click a node to see details."
     point = clickData['points'][0]
     node_id = int(point['pointIndex'])
     similarities = sim_matrix[:, node_id]
@@ -147,18 +147,19 @@ def update_graph(clickData):
     top_neighbors = [i for i in top_indices if i != node_id][:5]
     force_edges = [(node_id, i) for i in top_neighbors]
 
-    info = []
-    info.append(html.H4(f"Selected Node: {metadata.iloc[node_id]['Title']}"))
-    info.append(html.A("Link", href=metadata.iloc[node_id]['Link'], target="_blank"))
-    info.append(html.H5("Top 5 Similar Articles:"))
-    for idx in top_neighbors:
-        info.append(html.P([
-            html.Strong(metadata.iloc[idx]['Title']),
-            html.Br(),
-            html.A("Link", href=metadata.iloc[idx]['Link'], target="_blank")
-        ]))
+    # info = []
+    # info.append(html.H4(f"Selected Node: {metadata.iloc[node_id]['Title']}"))
+    # info.append(html.A("Link", href=metadata.iloc[node_id]['Link'], target="_blank"))
+    # info.append(html.H5("Top 5 Similar Articles:"))
+    # for idx in top_neighbors:
+    #     info.append(html.P([
+    #         html.Strong(metadata.iloc[idx]['Title']),
+    #         html.Br(),
+    #         html.A("Link", href=metadata.iloc[idx]['Link'], target="_blank")
+    #     ]))
 
-    return create_figure(highlight_node=node_id, top_neighbors=top_neighbors, force_edges=force_edges), info
+    # return create_figure(highlight_node=node_id, top_neighbors=top_neighbors, force_edges=force_edges), info
+
 
 if __name__ == '__main__':
     app.run(debug=True)
